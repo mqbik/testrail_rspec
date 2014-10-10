@@ -1,4 +1,4 @@
-# Testrail::Rspec
+# TestrailRspec
 
 This gem provides custom RSpec formatter allowing to export test results directly to [TestRail][1] instance via their [API][2].
 
