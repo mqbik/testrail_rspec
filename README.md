@@ -7,7 +7,7 @@ This gem provides custom RSpec formatter allowing to export test results directl
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'testrail-rspec'
+gem 'testrail_rspec'
 ```
 
 And then execute:
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install testrail-rspec
+    $ gem install testrail_rspec
 
 ## Usage
 
@@ -26,11 +26,11 @@ via RSpec.configure in spec_helper.rb - describe it in more details when decided
 
 add to .rspec file this way:
 
-    $ --format TestLink::Exporter
+    $ --format TestrailRSpec
 
 or use it from commandline this way:
 
-    $ rspec spec --format TestLink::Exporter
+    $ rspec spec --format TestrailRSpec
 
 ## Contributing
 
