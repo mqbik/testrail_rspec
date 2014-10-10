@@ -5,7 +5,7 @@ require 'testrail_rspec/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "testrail_rspec"
-  spec.version       = TestrailRSpec::VERSION
+  spec.version       = TestrailRspec::VERSION
   spec.authors       = ["Michal Kubik"]
   spec.email         = ["michal.kubik@boost.no"]
   spec.summary       = %q{RSpec exporter formatter - pushes test run results to TestRail instance.}
