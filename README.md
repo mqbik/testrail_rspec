@@ -1,4 +1,5 @@
 # TestrailRspec
+[![Gem Version](https://badge.fury.io/rb/testrail_rspec.svg)](http://badge.fury.io/rb/testrail_rspec)
 
 This gem provides custom RSpec formatter allowing to export test results directly to [TestRail][1] instance via their [API][2].
 
