@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 Gem::Specification.new do |spec|
   spec.name          = "testrail_rspec"
 
-  spec.version       = '0.0.4'
+  spec.version       = '0.0.5'
 
   spec.authors       = ["Michal Kubik"]
   spec.email         = ["michal.kubik@boost.no"]
