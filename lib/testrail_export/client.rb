@@ -43,6 +43,7 @@ module Testrail
     end
 
     # ---------------------------------------------------> projects ----------------------------------------------------
+
     def get_projects
       @projects ||= @client.send_get('get_projects')
     end
@@ -59,6 +60,7 @@ module Testrail
     end
 
     # ----------------------------------------------------> suites <----------------------------------------------------
+
     def get_suite(suite_id)
       @suite[suite_id] ||= @client.send_get("get_suite/#{suite_id}")
     end
@@ -86,6 +88,7 @@ module Testrail
     end
 
     # ---------------------------------------------------> sections <---------------------------------------------------
+
     def get_sections(suite)
       @sections[suite['id']] ||= @client.send_get("get_sections/#{suite['project_id']}&suite_id=#{suite['id']}")
     end
@@ -113,6 +116,7 @@ module Testrail
     end
 
     # ----------------------------------------------------> cases <-----------------------------------------------------
+
     def find_or_create_case(title, section, depth)
       self.find_case(title, section, depth) || self.create_case(title, section['id'])
     end
@@ -130,6 +134,7 @@ module Testrail
     end
 
     # ----------------------------------------------------> runs <------------------------------------------------------
+
     def create_run(suite)
       @client.send_post("add_run/#{suite['project_id']}", { suite_id: suite['id'], name: "#{nice_time_now} - #{suite['name']}", description: 'describe it somehow'})
     end
