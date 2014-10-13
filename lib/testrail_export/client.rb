@@ -16,7 +16,7 @@ require 'net/https'
 require 'uri'
 require 'json'
 
-module TestrailRspec
+module Testrail
 
   AUTOMATED_DESCRIPTION = 'created by automated test suite'
 

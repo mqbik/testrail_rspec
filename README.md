@@ -26,11 +26,11 @@ via RSpec.configure in spec_helper.rb - describe it in more details when decided
 
 add to .rspec file this way:
 
-    $ --format TestrailRSpec
+    $ --format TestrailExport
 
 or use it from commandline this way:
 
-    $ rspec spec --format TestrailRSpec
+    $ rspec spec --format TestrailExport
 
 ## Contributing
 
