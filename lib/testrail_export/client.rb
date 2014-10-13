@@ -135,8 +135,8 @@ module Testrail
 
     # ----------------------------------------------------> runs <------------------------------------------------------
 
-    def create_run(suite)
-      @client.send_post("add_run/#{suite['project_id']}", { suite_id: suite['id'], name: "#{nice_time_now} - #{suite['name']}", description: 'describe it somehow'})
+    def create_run(suite, prefix=nil)
+      @client.send_post("add_run/#{suite['project_id']}", { suite_id: suite['id'], name: "#{prefix || nice_time_now} - #{suite['name']}", description: 'describe it somehow'})
     end
 
     def add_results_for_cases(run_id, results)

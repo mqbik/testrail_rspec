@@ -29,6 +29,7 @@ class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
     @options = RSpec.configuration.testrail_formatter_options
     @client = Testrail::Client.new(@options)
     @client.get_projects.each { |project| @project_id = project['id'] if project['name'] == @options[:project] }
+    @start_time_str = start_timestamp
 
     puts "TestRail Exporter [INFO] Executing #{notification.count} tests. Loaded in #{notification.load_time}"
 
@@ -162,7 +163,7 @@ class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
   end
 
   def update_test_run(suite)
-    run_id = @client.create_run(suite.content)['id']
+    run_id = @client.create_run(suite.content, @start_time_str)['id']
     results = suite.each_leaf.map do |test|
       test_result = test.content[:result].execution_result
       run_time_seconds = test_result.run_time.round(0)
@@ -173,5 +174,10 @@ class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
       }
     end
     @client.add_results_for_cases(run_id, results)
+  end
+
+  def start_timestamp
+    # make it a bit freezed
+    Time.at((Time.now.to_i.to_s[0..7] + "00").to_i).strftime('%d %b %Y %R %Z')
   end
 end
