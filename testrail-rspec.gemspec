@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'testrail_rspec/version'
+require 'testrail/rspec/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "testrail_rspec"
-  spec.version       = TestrailRspec::VERSION
+  spec.name          = "testrail-rspec"
+  spec.version       = Testrail::RSpec::VERSION
   spec.authors       = ["Michal Kubik"]
   spec.email         = ["michal.kubik@boost.no"]
   spec.summary       = %q{RSpec exporter formatter - pushes test run results to TestRail instance.}
