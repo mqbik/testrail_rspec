@@ -5,11 +5,11 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 Gem::Specification.new do |spec|
   spec.name          = "testrail_rspec"
 
-  spec.version       = '0.0.3'
+  spec.version       = '0.0.4'
 
   spec.authors       = ["Michal Kubik"]
   spec.email         = ["michal.kubik@boost.no"]
-  spec.homepage      = "https://github.com/mkubik8080/testrail-rspec"
+  spec.homepage      = "https://github.com/mkubik8080/testrail_rspec"
 
   spec.license       = "MIT"
   spec.summary       = %q{RSpec exporter formatter - pushes test run results to TestRail instance.}
