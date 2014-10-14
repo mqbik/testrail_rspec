@@ -5,9 +5,9 @@ require 'rubytree'
 
 require "testrail_export/client"
 
-class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
+RSpec.configuration.add_setting :testrail_formatter_options, :default => {}
 
-  RSpec.configuration.add_setting :testrail_formatter_options, :default => {}
+class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
 
   RSpec::Core::Formatters.register self, :start, :close, :dump_summary
   #                                  # :example_started, :example_passed,
