@@ -20,7 +20,7 @@ class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
 
   def initialize(output)
     @options = {}
-    @project_id = nil
+    @project = nil
     super(output)
   end
 
@@ -28,7 +28,7 @@ class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
   def start(notification)
     @options = RSpec.configuration.testrail_formatter_options
     @client = Testrail::Client.new(@options)
-    @client.get_projects.each { |project| @project_id = project['id'] if project['name'] == @options[:project] }
+    @client.get_projects.each { |project| @project = project if project['name'] == @options[:project] }
     @start_time_str = start_timestamp
 
     puts "TestRail Exporter [INFO] Executing #{notification.count} tests. Loaded in #{notification.load_time}"
@@ -102,13 +102,13 @@ class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
 
   def dump_summary(notification)
     # Create project if it is not present / could do it setting controlled
-    if @project_id.nil?
+    if @project.nil?
       puts "TestRail Exporter [INFO] Creating project: #{@options[:project]}"
-      @project_id = @client.add_project(@options[:project])['id']
+      @project = @client.add_project(@options[:project])
     end
 
     suites = Hash.new do |h,k|
-      h[k] = Tree::TreeNode.new(k, @client.find_or_create_suite(k, @project_id) )
+      h[k] = Tree::TreeNode.new(k, @client.find_or_create_suite(k, @project['id']) )
     end
 
 
@@ -139,7 +139,7 @@ class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
 
   def build_hierarchy_tree!(suites, example)
     path = get_path_for(example)
-
+    path.unshift('Master') if @project['suite_mode'] == 1
     parent_node = suite_node = suites[path.shift]
     path.unshift('Direct cases') unless path.size > 1
 

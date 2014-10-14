@@ -48,11 +48,12 @@ module Testrail
       @projects ||= @client.send_get('get_projects')
     end
 
-    def add_project(project_name)
+    def add_project(project_name, suite_mode=1)
       @projects = nil # invalidate cached stuff
-      @client.send_post('add_project', {name: project_name,
-                                        announcement: AUTOMATED_DESCRIPTION,
-                                        show_anouncement: true})
+      @client.send_post('add_project', { name: project_name,
+                                         announcement: AUTOMATED_DESCRIPTION,
+                                         show_anouncement: true,
+                                         suite_mode: suite_mode })
     end
 
     def get_project(project_id)
