@@ -29,7 +29,7 @@ class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
     @options = RSpec.configuration.testrail_formatter_options
     @client = Testrail::Client.new(@options)
     @client.get_projects.each { |project| @project = project if project['name'] == @options[:project] }
-    @start_time_str = start_timestamp
+    @run_name = ENV['TEST_RUN_NAME'] || start_timestamp
 
     puts "TestRail Exporter [INFO] Executing #{notification.count} tests. Loaded in #{notification.load_time}"
 
@@ -116,7 +116,7 @@ class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
       build_hierarchy_tree!(suites, example)
     end
 
-    suites.each { |_, suite| update_test_run(suite) }
+    suites.each { |_, suite| update_test_run(suite, @run_name) }
 
     super
   end
@@ -162,8 +162,8 @@ class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
 
   end
 
-  def update_test_run(suite)
-    run_id = @client.create_run(suite.content, @start_time_str)['id']
+  def update_test_run(suite, run_name)
+    run_id = @client.create_run(suite.content, run_name)['id']
     results = suite.each_leaf.map do |test|
       test_result = test.content[:result].execution_result
       run_time_seconds = test_result.run_time.round(0)

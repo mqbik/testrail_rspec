@@ -137,7 +137,11 @@ module Testrail
     # ----------------------------------------------------> runs <------------------------------------------------------
 
     def create_run(suite, prefix=nil)
-      @client.send_post("add_run/#{suite['project_id']}", { suite_id: suite['id'], name: "#{prefix || nice_time_now} - #{suite['name']}", description: 'describe it somehow'})
+      trailer = suite['name'] == 'Master' ? nil : suite['name']
+      run_name = [prefix || nice_time_now, trailer].compact.join(' - ')
+      @client.send_post("add_run/#{suite['project_id']}", { suite_id: suite['id'],
+                                                            name: run_name,
+                                                            description: 'Automated tests execution'})
     end
 
     def add_results_for_cases(run_id, results)

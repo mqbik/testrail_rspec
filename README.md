@@ -28,10 +28,21 @@ via RSpec.configure in spec_helper.rb - describe it in more details when decided
 add to .rspec file this way:
 
     $ --format TestrailExport
+the same for [Parallel Tests][3]
 
 or use it from commandline this way:
 
     $ rspec spec --format TestrailExport
+
+### Customize it
+##### Test Run name
+Test run names consists of two parts by default:
+
+- **TEST_RUN_NAME** envirnment variable value or execution time/date (i.e. **"15 Oct 2014 15:41 CEST"**)
+- suite name (if only it is different then _Master_ which is reserved for single suite projects)
+
+example test run name: **15 Oct 2014 15:41 CEST - Test Suite 1**
+
 
 ## Contributing
 
@@ -43,3 +54,4 @@ or use it from commandline this way:
 
 [1]: http://www.gurock.com/testrail/            "TestRail"
 [2]: http://docs.gurock.com/testrail-api2/start "TestRail API"
+[3]: https://github.com/grosser/parallel_tests  "Parallel Tests"
