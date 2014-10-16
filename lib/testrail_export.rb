@@ -101,6 +101,7 @@ class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
   end
 
   def dump_summary(notification)
+    @client.get_projects.each { |project| @project = project if project['name'] == @options[:project] } unless @project
     # Create project if it is not present / could do it setting controlled
     if @project.nil?
       puts "TestRail Exporter [INFO] Creating project: #{@options[:project]}"
@@ -167,11 +168,21 @@ class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
     results = suite.each_leaf.map do |test|
       test_result = test.content[:result].execution_result
       run_time_seconds = test_result.run_time.round(0)
+      infos = { elapsed: (run_time_seconds == 0) ? nil : "#{run_time_seconds}s",
+                version: nil
+      }
+      infos[:comment] = case test_result.status
+                          when :failed
+                            [test_result.exception.message, test_result.exception.backtrace].join("\n")
+                          when :pending
+                            test_result.pending_message
+                          else
+                            nil
+                        end
       {
           case_id:    test.content[:case]['id'],
-          status_id:  Testrail::STATUS[test_result.status],
-          elapsed:    (run_time_seconds == 0) ? nil : "#{run_time_seconds}s"
-      }
+          status_id:  Testrail::STATUS[test_result.status]
+      }.merge(infos.delete_if { |_,v| v.nil? })
     end
     @client.add_results_for_cases(run_id, results)
   end
