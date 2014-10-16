@@ -136,9 +136,20 @@ module Testrail
 
     # ----------------------------------------------------> runs <------------------------------------------------------
 
-    def create_run(suite, prefix=nil)
+    def find_or_create_run(suite, prefix=nil)
       trailer = suite['name'] == 'Master' ? nil : suite['name']
       run_name = [prefix || nice_time_now, trailer].compact.join(' - ')
+      self.find_run(suite, run_name) || self.create_run(suite, run_name)
+    end
+
+    def find_run(suite, run_name)
+      test_runs = @client.send_get("get_runs/#{suite['project_id']}&is_completed=0&suite_id=#{suite['id']}")
+      test_runs.find do |run|
+        run['name'].strip == run_name.strip
+      end
+    end
+
+    def create_run(suite, run_name)
       @client.send_post("add_run/#{suite['project_id']}", { suite_id: suite['id'],
                                                             name: run_name,
                                                             description: 'Automated tests execution'})

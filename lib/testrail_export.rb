@@ -164,7 +164,7 @@ class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
   end
 
   def update_test_run(suite, run_name)
-    run_id = @client.create_run(suite.content, run_name)['id']
+    run_id = @client.find_or_create_run(suite.content, run_name)['id']
     results = suite.each_leaf.map do |test|
       test_result = test.content[:result].execution_result
       run_time_seconds = test_result.run_time.round(0)
