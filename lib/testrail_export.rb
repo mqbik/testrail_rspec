@@ -101,7 +101,7 @@ class TestrailExport < RSpec::Core::Formatters::BaseTextFormatter
   end
 
   def dump_summary(notification)
-    @client.get_projects.each { |project| @project = project if project['name'] == @options[:project] } unless @project
+    @client.get_projects(clear_cached: true).each { |project| @project = project if project['name'] == @options[:project] } unless @project
     # Create project if it is not present / could do it setting controlled
     if @project.nil?
       puts "TestRail Exporter [INFO] Creating project: #{@options[:project]}"

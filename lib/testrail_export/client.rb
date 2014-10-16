@@ -44,8 +44,8 @@ module Testrail
 
     # ---------------------------------------------------> projects ----------------------------------------------------
 
-    def get_projects
-      @projects ||= @client.send_get('get_projects')
+    def get_projects(clear_cached: false)
+      @projects = clear_cached || @projects.nil? ? @client.send_get('get_projects') : @projects
     end
 
     def add_project(project_name, suite_mode=1)
